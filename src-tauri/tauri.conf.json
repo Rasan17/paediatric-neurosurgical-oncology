@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Paediatric-Neurosurgical-Oncology",
+  "version": "1.0.0",
+  "identifier": "com.paediatricneurosurgery.oncology",
+  "build": {
+    "beforeBuildCommand": "node build.js",
+    "beforeDevCommand": "node build.js",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "title": "Multidisciplinary Paediatric Neurosurgical Oncology Database — Dr G Narenthiran",
+        "width": 1400,
+        "height": 920,
+        "minWidth": 1050,
+        "minHeight": 720,
+        "resizable": true,
+        "fullscreen": false,
+        "center": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "category": "Medical",
+    "shortDescription": "Multidisciplinary Paediatric Neurosurgical Oncology Registry",
+    "longDescription": "Specialized clinical and research database for paediatric brain, spinal cord, and peripheral nerve tumours, incorporating WHO CNS 2021 molecular pathology, redo/recurrence/metastasis surgeries, and multidisciplinary oncology inputs.",
+    "copyright": "Copyright 2026, Dr G Narenthiran, g_narenthiran@hotmail.com, all rights reserved.",
+    "macOS": {
+      "minimumSystemVersion": "10.13"
+    },
+    "windows": {
+      "certificateThumbprint": null,
+      "digestAlgorithm": "sha256",
+      "timestampUrl": ""
+    }
+  }
+}

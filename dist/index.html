@@ -1,0 +1,1822 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multidisciplinary Paediatric Neurosurgical Oncology Database</title>
+  <meta name="description" content="Dedicated Clinical Registry for Paediatric Brain, Spine and Peripheral Nerve Tumours, Molecular Profiles, Complex Surgeries, and Multimodal Outcomes">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- CSS Styles -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand-section">
+        <div class="brand-icon" style="background:linear-gradient(135deg, #8b5cf6, #3b82f6);">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a10 10 0 0 0-10 10c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="brand-title">Multidisciplinary Paediatric Neurosurgical Oncology Database</h1>
+          <div class="brand-attribution">Conceived, designed and tested: Dr G Narenthiran MB ChB BSc(MedSci)(Hons) MRCS(Ed.) FEBNS FRCS(SN). Dedicated to Mrs Nirmaladevy Ganesalingam BSc. Copyright 2026, Dr G Narenthiran, g_narenthiran@hotmail.com, all rights reserved.</div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="search-box">
+          <input type="text" id="global-patient-search" placeholder="Search patient by MRN, name, histology..." />
+        </div>
+
+        <select id="patient-select-dropdown" class="header-select">
+          <option value="">-- Select Patient --</option>
+        </select>
+
+        <button id="btn-new-patient" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          New Patient
+        </button>
+
+        <button id="btn-db-ops" class="btn btn-secondary" title="Database Backups, Stata (.dta), Excel Export & Cloning">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Backups & Export
+        </button>
+
+        <button id="btn-audit-log" class="btn btn-secondary" title="Encrypted Regulatory Audit Ledger">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          Audit Ledger
+        </button>
+
+        <button id="btn-db-design" class="btn btn-warning" title="Database Design & Schema Studio (Developer Only)" style="display:none;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+          DB Design
+        </button>
+
+        <!-- User Profile Widget -->
+        <div class="user-profile-widget" id="user-profile-widget">
+          <div class="user-avatar-circle" id="user-avatar-initial">U</div>
+          <div>
+            <div style="font-weight:600; line-height:1.1;" id="header-user-name">User</div>
+            <div style="font-size:0.7rem;" id="header-user-role-badge" class="badge role-badge-user">User</div>
+          </div>
+          <button id="btn-user-menu-trigger" class="btn btn-ghost btn-xs" style="padding:2px 4px;" title="User Profile Menu">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          
+          <div class="user-menu-dropdown" id="user-menu-dropdown">
+            <button type="button" class="user-menu-item" id="btn-trigger-change-password">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              Change My Password
+            </button>
+            <button type="button" class="user-menu-item" id="btn-trigger-user-mgmt">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              User Management
+            </button>
+            <div class="user-menu-divider"></div>
+            <button type="button" class="user-menu-item text-danger" id="btn-trigger-logout">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+              Sign Out
+            </button>
+          </div>
+        </div>
+
+        <button id="btn-about-info" class="btn btn-ghost" title="About & Dedication">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+        </button>
+
+        <button id="btn-theme-toggle" class="btn btn-ghost" title="Toggle Theme">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Top Stats Bar -->
+    <section class="stats-ribbon">
+      <div class="stat-item">
+        <span class="stat-label">TOTAL ONCOLOGY PATIENTS</span>
+        <span class="stat-value" id="stat-total-patients">0</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-label">BRAIN TUMOURS</span>
+        <span class="stat-value text-csf" id="stat-brain-tumours">0</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-label">SPINAL TUMOURS</span>
+        <span class="stat-value text-lova" id="stat-spine-tumours">0</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-label">PERIPHERAL NERVE</span>
+        <span class="stat-value text-amber" id="stat-nerve-tumours">0</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-label">REDO / RECURRENT SURGERIES</span>
+        <span class="stat-value text-teal" id="stat-redo-surgeries">0</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-label">COMPLETE REMISSION (NED)</span>
+        <span class="stat-value text-emerald" id="stat-ned-patients">0</span>
+      </div>
+    </section>
+
+    <!-- Active Patient Quick Banner & Action Buttons -->
+    <section class="active-patient-bar" id="active-patient-banner">
+      <div class="patient-pill">
+        <span class="pill-dot"></span>
+        <span class="pill-id" id="banner-patient-id">NO PATIENT SELECTED</span>
+        <span class="pill-meta" id="banner-patient-meta">Select a patient or click 'New Patient'</span>
+      </div>
+      <div class="patient-quick-stats">
+        <div class="qs-item">Diagnosis: <strong id="banner-diagnosis" class="text-csf">--</strong></div>
+        <div class="qs-item">Grade: <strong id="banner-grade">--</strong></div>
+        <div class="qs-item">Site: <strong id="banner-site">--</strong></div>
+        <div class="qs-item">EOR Achieved: <strong id="banner-eor" class="text-emerald">--</strong></div>
+        <div class="qs-item">Chang: <strong id="banner-chang">--</strong></div>
+        <div class="qs-item">Lansky / KPS: <strong id="banner-performance">--</strong></div>
+        <div class="qs-item">Disease Status: <strong id="banner-disease-status" class="text-teal">--</strong></div>
+      </div>
+      <div class="patient-actions-group" style="display:flex; gap:0.5rem; margin-left:auto;">
+        <button id="btn-save-patient" class="btn btn-success" title="Save Oncology Patient Record">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+          Save Record
+        </button>
+        <button id="btn-open-discharge-modal" class="btn btn-secondary" title="Generate Inpatient Discharge Letter">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          Discharge Letter
+        </button>
+        <button id="btn-open-clinic-modal" class="btn btn-secondary" title="Generate Outpatient Clinic Letter">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          Clinic Letter
+        </button>
+        <button id="btn-delete-patient" class="btn btn-danger" title="Delete Patient Record (Admin/Dev Only)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- Main Navigation Tabs -->
+    <nav class="tabs-nav" id="main-tabs-nav">
+      <button class="tab-btn active" data-tab="tab-demographics">1. Demographics & Predisposition</button>
+      <button class="tab-btn" data-tab="tab-presentation">2. Tumour Presentation (Brain / Spine / Nerve)</button>
+      <button class="tab-btn" data-tab="tab-pathology">3. Pathology & Molecular Profile</button>
+      <button class="tab-btn" data-tab="tab-surgeries">4. Surgeries (Primary / Redo / Recurrence / Mets)</button>
+      <button class="tab-btn" data-tab="tab-outcomes">5. Tumour Outcomes (Residue / Functional / Complications)</button>
+      <button class="tab-btn" data-tab="tab-oncology">6. Paediatric Neuro-Oncology & Chemo</button>
+      <button class="tab-btn" data-tab="tab-radiotherapy">7. Radiotherapy & Proton Beam</button>
+      <button class="tab-btn" data-tab="tab-rehabilitation">8. Neurorehabilitation</button>
+      <button class="tab-btn" data-tab="tab-neuropsychology">9. Neuropsychology</button>
+      <button class="tab-btn" data-tab="tab-family-discussions">10. Family Discussions Log</button>
+      <button class="tab-btn" data-tab="tab-cohort">11. Cohort Analytics</button>
+    </nav>
+
+    <!-- Tab Panels Container -->
+    <main class="tab-content-area">
+
+      <!-- TAB 1: DEMOGRAPHICS & PREDISPOSITION -->
+      <section class="tab-panel active" id="tab-demographics">
+        <div class="panel-header">
+          <h2>Patient Demographics & Cancer Predisposition</h2>
+          <p class="panel-description">Identification, performance status baseline, genetic predisposition syndromes, and primary multidisciplinary team members.</p>
+        </div>
+
+        <form id="form-demographics" class="grid-form">
+          <div class="card grid-span-12">
+            <h3 class="card-title">Patient Identification & Baseline Status</h3>
+            <div class="form-grid grid-cols-4">
+              <div class="form-group">
+                <label for="f-study-id">Study Identifier*</label>
+                <input type="text" id="f-study-id" class="form-control" required placeholder="e.g. ONC-MED-001" />
+              </div>
+              <div class="form-group">
+                <label for="f-hospital-number">Hospital / NHS / MRN Number*</label>
+                <input type="text" id="f-hospital-number" class="form-control" required placeholder="e.g. RMCH-551928" />
+              </div>
+              <div class="form-group">
+                <label for="f-first-name">First Name*</label>
+                <input type="text" id="f-first-name" class="form-control" required placeholder="First name" />
+              </div>
+              <div class="form-group">
+                <label for="f-last-name">Last Name*</label>
+                <input type="text" id="f-last-name" class="form-control" required placeholder="Last name" />
+              </div>
+
+              <div class="form-group">
+                <label for="f-dob">Date of Birth*</label>
+                <input type="date" id="f-dob" class="form-control" required />
+              </div>
+              <div class="form-group">
+                <label for="f-age-at-presentation">Age at Presentation*</label>
+                <input type="number" step="0.1" id="f-age-at-presentation" class="form-control" required placeholder="e.g. 7.2" />
+              </div>
+              <div class="form-group">
+                <label for="f-age-unit">Age Unit*</label>
+                <select id="f-age-unit" class="form-control" required>
+                  <option value="Years" selected>Years</option>
+                  <option value="Months">Months</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="f-gender">Gender*</label>
+                <select id="f-gender" class="form-control" required>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                  <option value="Unknown">Unknown</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="f-ethnicity">Ethnicity</label>
+                <input type="text" id="f-ethnicity" class="form-control" placeholder="e.g. White British, Asian..." />
+              </div>
+              <div class="form-group">
+                <label for="f-handedness">Handedness / Dominance</label>
+                <select id="f-handedness" class="form-control">
+                  <option value="Right" selected>Right Handed</option>
+                  <option value="Left">Left Handed</option>
+                  <option value="Ambidextrous">Ambidextrous</option>
+                  <option value="Not Applicable / Infant">Not Applicable / Infant</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="f-baseline-lansky-kps">Baseline Functional Score (%)*</label>
+                <input type="number" id="f-baseline-lansky-kps" class="form-control font-mono font-bold" min="0" max="100" step="10" value="80" required />
+              </div>
+              <div class="form-group">
+                <label for="f-performance-scale-type">Functional Scale Used</label>
+                <select id="f-performance-scale-type" class="form-control font-bold">
+                  <option value="Lansky Play-Performance (<16y)" selected>Lansky Play-Performance (&lt;16y)</option>
+                  <option value="Karnofsky Performance (>=16y)">Karnofsky Performance (&ge;16y)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cancer Predisposition & MDT Members Card -->
+          <div class="card grid-span-6 card-highlight-csf">
+            <h3 class="card-title">Genetic & Cancer Predisposition Syndromes</h3>
+            <div class="form-grid grid-cols-1">
+              <div class="form-group">
+                <label for="f-predisposition-syndrome">Predisposition Syndrome Status*</label>
+                <select id="f-predisposition-syndrome" class="form-control font-bold" required>
+                  <option value="None / Sporadic" selected>None / Sporadic Tumour</option>
+                  <option value="Neurofibromatosis Type 1 (NF1)">Neurofibromatosis Type 1 (NF1 - Optic pathway / plexiform)</option>
+                  <option value="Neurofibromatosis Type 2 (NF2)">Neurofibromatosis Type 2 (NF2 - Bilateral vestibular / ependymoma)</option>
+                  <option value="Li-Fraumeni Syndrome (TP53)">Li-Fraumeni Syndrome (TP53 - SHH medulloblastoma / CPC / glioma)</option>
+                  <option value="Gorlin Syndrome (Nevoid Basal Cell Carcinoma / PTCH1)">Gorlin Syndrome (PTCH1 - Desmoplastic medulloblastoma)</option>
+                  <option value="Schwannomatosis (SMARCB1/LZTR1)">Schwannomatosis (SMARCB1 / LZTR1)</option>
+                  <option value="Tuberous Sclerosis Complex (TSC1/TSC2)">Tuberous Sclerosis Complex (TSC - SEGA)</option>
+                  <option value="von Hippel-Lindau Disease (VHL)">von Hippel-Lindau Disease (VHL - Hemangioblastoma)</option>
+                  <option value="Constitutional Mismatch Repair Deficiency (CMMRD)">Constitutional Mismatch Repair Deficiency (CMMRD)</option>
+                  <option value="Other Genetic / Syndromic">Other Genetic / Syndromic Syndrome</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="card grid-span-6 card-highlight-lova">
+            <h3 class="card-title">Named Multidisciplinary Team Leads</h3>
+            <div class="form-grid grid-cols-2">
+              <div class="form-group">
+                <label for="f-consultant-surgeon">Consultant Neurosurgeon</label>
+                <input type="text" id="f-consultant-surgeon" class="form-control" value="Dr G Narenthiran" />
+              </div>
+              <div class="form-group">
+                <label for="f-consultant-neurooncologist">Consultant Neuro-Oncologist</label>
+                <input type="text" id="f-consultant-neurooncologist" class="form-control" value="Dr Victoria Shaw" />
+              </div>
+              <div class="form-group">
+                <label for="f-consultant-radiotherapist">Consultant Radiotherapist / PBT</label>
+                <input type="text" id="f-consultant-radiotherapist" class="form-control" value="Dr Marcus Cole" />
+              </div>
+              <div class="form-group">
+                <label for="f-clinical-nurse-specialist">Clinical Nurse Specialist (CNS)</label>
+                <input type="text" id="f-clinical-nurse-specialist" class="form-control" value="Sister Rachel Adams" />
+              </div>
+            </div>
+          </div>
+
+          <div class="card grid-span-12">
+            <h3 class="card-title">General Notes & Clinical History Summary</h3>
+            <div class="form-group">
+              <textarea id="f-notes" class="form-control" rows="2" placeholder="Clinical presentation overview, relevant past medical history, referral details..."></textarea>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- TAB 2: TUMOUR PRESENTATION (BRAIN, SPINE, PERIPHERAL NERVE) -->
+      <section class="tab-panel" id="tab-presentation">
+        <div class="panel-header">
+          <h2>Tumour Presentation: Brain, Spine & Peripheral Nerve</h2>
+          <p class="panel-description">Dedicated presentation symptoms and signs tailored specifically for paediatric intracranial, spinal, and peripheral nerve neoplasms.</p>
+        </div>
+
+        <form id="form-presentation" class="grid-form">
+          <div class="card grid-span-12">
+            <h3 class="card-title">Anatomical Category & Primary Site</h3>
+            <div class="form-grid grid-cols-3">
+              <div class="form-group">
+                <label for="f-anatomical-category">Primary Anatomical Category*</label>
+                <select id="f-anatomical-category" class="form-control font-bold" required>
+                  <option value="Brain - Posterior Fossa" selected>Brain - Posterior Fossa (Cerebellum / 4th Ventricle)</option>
+                  <option value="Brain - Supratentorial Hemispheric (Lobar)">Brain - Supratentorial Hemispheric (Frontal / Temporal / Parietal)</option>
+                  <option value="Brain - Suprasellar / Hypothalamic / Chiasmatic">Brain - Suprasellar / Hypothalamic / Chiasmatic (Craniopharyngioma / Optic)</option>
+                  <option value="Brain - Brainstem / Tectal / Pons">Brain - Brainstem / Tectal / Midbrain / Pons (DMG)</option>
+                  <option value="Brain - Pineal Region">Brain - Pineal Region</option>
+                  <option value="Brain - Intraventricular (Lateral / 3rd / 4th)">Brain - Intraventricular (CPP / Ependymoma / SEGA)</option>
+                  <option value="Spine - Intramedullary">Spine - Intramedullary (Ependymoma / Astrocytoma)</option>
+                  <option value="Spine - Intradural Extramedullary">Spine - Intradural Extramedullary (Schwannoma / Meningioma)</option>
+                  <option value="Spine - Extradural / Vertebral">Spine - Extradural / Vertebral Body</option>
+                  <option value="Peripheral Nerve - Brachial Plexus">Peripheral Nerve - Brachial Plexus</option>
+                  <option value="Peripheral Nerve - Lumbosacral Plexus">Peripheral Nerve - Lumbosacral Plexus</option>
+                  <option value="Peripheral Nerve - Major Peripheral Trunk">Peripheral Nerve - Major Peripheral Trunk (Sciatic / Median / Ulnar)</option>
+                  <option value="Cranial Nerve (Vestibular / Trigeminal Schwannoma)">Cranial Nerve (Vestibular / Trigeminal Schwannoma)</option>
+                  <option value="Multifocal / Disseminated at Presentation">Multifocal / Disseminated at Presentation</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="f-specific-anatomical-site">Specific Anatomical Location & Landmarks</label>
+                <input type="text" id="f-specific-anatomical-site" class="form-control" placeholder="e.g. 4th ventricle vermian lesion with tonsillar herniation" />
+              </div>
+              <div class="form-group">
+                <label for="f-laterality">Laterality</label>
+                <select id="f-laterality" class="form-control">
+                  <option value="Midline" selected>Midline</option>
+                  <option value="Right">Right</option>
+                  <option value="Left">Left</option>
+                  <option value="Bilateral">Bilateral</option>
+                  <option value="Not Applicable">Not Applicable</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="f-symptom-duration-weeks">Symptom Duration before Diagnosis (weeks)</label>
+                <input type="number" step="0.5" id="f-symptom-duration-weeks" class="form-control" placeholder="e.g. 4.5 weeks" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Brain Tumour Presentation Signs Card -->
+          <div class="card grid-span-4 card-highlight-csf">
+            <h3 class="card-title">Brain Tumour Clinical Signs</h3>
+            <div class="form-grid grid-cols-1 mt-2">
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-headache-raised-icp" />
+                <label for="f-headache-raised-icp"><strong>Raised ICP Headaches</strong> (Worse morning / supine)</label>
+              </div>
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-vomiting-morning" />
+                <label for="f-vomiting-morning"><strong>Morning Projectile Vomiting</strong></label>
+              </div>
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-papilledema" />
+                <label for="f-papilledema"><strong>Papilledema on Fundoscopy</strong></label>
+              </div>
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-seizures" />
+                <label for="f-seizures"><strong>Seizures</strong> (Focal / Generalized)</label>
+              </div>
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-cranial-nerve-palsy" />
+                <label for="f-cranial-nerve-palsy"><strong>Cranial Nerve Palsy</strong> (Diplopia, facial weakness, dysphagia)</label>
+              </div>
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-cerebellar-ataxia-dysmetria" />
+                <label for="f-cerebellar-ataxia-dysmetria"><strong>Cerebellar Ataxia &amp; Dysmetria</strong></label>
+              </div>
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-torticollis-head-tilt" />
+                <label for="f-torticollis-head-tilt"><strong>Torticollis / Abnormal Head Tilt</strong></label>
+              </div>
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-hemiparesis-motor-deficit" />
+                <label for="f-hemiparesis-motor-deficit"><strong>Hemiparesis / Pyramidal Deficit</strong></label>
+              </div>
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-macrocephaly-rapid-head-growth" />
+                <label for="f-macrocephaly-rapid-head-growth"><strong>Macrocephaly / Rapid Head Growth</strong></label>
+              </div>
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-endocrine-dysfunction" />
+                <label for="f-endocrine-dysfunction"><strong>Endocrine Deficits</strong> (Growth delay, DI, precocity)</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Spine Tumour Presentation Signs Card -->
+          <div class="card grid-span-4 card-highlight-lova">
+            <h3 class="card-title">Spine Tumour Clinical Signs</h3>
+            <div class="form-grid grid-cols-1 mt-2">
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-back-or-neck-pain" />
+                <label for="f-back-or-neck-pain"><strong>Back / Neck Pain</strong> (Nocturnal spinal ache)</label>
+              </div>
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-radicular-pain" />
+                <label for="f-radicular-pain"><strong>Radicular Nerve Root Pain</strong></label>
+              </div>
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-spinal-motor-weakness" />
+                <label for="f-spinal-motor-weakness"><strong>Motor Weakness</strong> (Paraparesis / Quadriparesis / Gait refusal)</label>
+              </div>
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-sensory-level-deficit" />
+                <label for="f-sensory-level-deficit"><strong>Definite Sensory Level Deficit</strong></label>
+              </div>
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-sphincter-disturbance" />
+                <label for="f-sphincter-disturbance"><strong>Sphincter Disturbance</strong> (Urinary retention / incontinence, obstipation)</label>
+              </div>
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-spinal-deformity-scoliosis" />
+                <label for="f-spinal-deformity-scoliosis"><strong>Spinal Deformity / Painful Scoliosis</strong></label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Peripheral Nerve Tumour Presentation Signs Card -->
+          <div class="card grid-span-4 card-highlight-amber">
+            <h3 class="card-title">Peripheral Nerve Signs</h3>
+            <div class="form-grid grid-cols-1 mt-2">
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-palpable-nerve-mass" />
+                <label for="f-palpable-nerve-mass"><strong>Palpable Nerve Mass</strong> (Plexiform / Fusiform / Node)</label>
+              </div>
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-tinel-sign-positive" />
+                <label for="f-tinel-sign-positive"><strong>Positive Tinel's Sign</strong> (Paraesthesias on percussion)</label>
+              </div>
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-focal-muscle-wasting" />
+                <label for="f-focal-muscle-wasting"><strong>Focal Muscle Wasting</strong> (In peripheral nerve territory)</label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- TAB 3: PATHOLOGY & MOLECULAR PROFILE -->
+      <section class="tab-panel" id="tab-pathology">
+        <div class="panel-header">
+          <h2>Tumour Pathology, Histology & Molecular Profile</h2>
+          <p class="panel-description">Integrated histological and molecular profiling conforming to the WHO Classification of Tumours of the CNS (5th Edition, 2021).</p>
+        </div>
+
+        <form id="form-pathology" class="grid-form">
+          <div class="card grid-span-6 card-highlight-csf">
+            <h3 class="card-title">Histopathological Diagnosis & Grade (WHO 2021)</h3>
+            <div class="form-grid grid-cols-2">
+              <div class="form-group grid-span-2">
+                <label for="f-who-diagnosis-2021">WHO 2021 CNS 5th Edition Diagnosis*</label>
+                <select id="f-who-diagnosis-2021" class="form-control font-bold" required>
+                  <option value="Pilocytic Astrocytoma">Pilocytic Astrocytoma</option>
+                  <option value="Medulloblastoma, WNT-activated">Medulloblastoma, WNT-activated</option>
+                  <option value="Medulloblastoma, SHH-activated (TP53-wildtype)">Medulloblastoma, SHH-activated (TP53-wildtype)</option>
+                  <option value="Medulloblastoma, SHH-activated (TP53-mutant)">Medulloblastoma, SHH-activated (TP53-mutant)</option>
+                  <option value="Medulloblastoma, non-WNT/non-SHH (Group 3)">Medulloblastoma, non-WNT/non-SHH (Group 3)</option>
+                  <option value="Medulloblastoma, non-WNT/non-SHH (Group 4)">Medulloblastoma, non-WNT/non-SHH (Group 4)</option>
+                  <option value="Posterior Fossa Ependymoma (PFA)">Posterior Fossa Ependymoma (PFA)</option>
+                  <option value="Posterior Fossa Ependymoma (PFB)">Posterior Fossa Ependymoma (PFB)</option>
+                  <option value="Supratentorial Ependymoma, ZFTA-fusion positive">Supratentorial Ependymoma, ZFTA-fusion positive</option>
+                  <option value="Supratentorial Ependymoma, YAP1-fusion positive">Supratentorial Ependymoma, YAP1-fusion positive</option>
+                  <option value="Spinal Ependymoma">Spinal Ependymoma</option>
+                  <option value="Diffuse Midline Glioma, H3 K27-altered">Diffuse Midline Glioma, H3 K27-altered</option>
+                  <option value="Atypical Teratoid/Rhabdoid Tumour (ATRT)">Atypical Teratoid/Rhabdoid Tumour (ATRT - SMARCB1/INI1 loss)</option>
+                  <option value="Craniopharyngioma (Adamantinomatous / Papillary)">Craniopharyngioma (Adamantinomatous / Papillary)</option>
+                  <option value="Choroid Plexus Papilloma / Carcinoma">Choroid Plexus Papilloma / Carcinoma</option>
+                  <option value="Germinoma / Non-Germinomatous Germ Cell Tumour">Germ Cell Tumour (Germinoma / NGGCT)</option>
+                  <option value="Schwannoma (Cellular / Plexiform / Melanotic)">Schwannoma (Peripheral / Cranial Nerve)</option>
+                  <option value="Neurofibroma (Plexiform / Solitary)">Neurofibroma (Plexiform / Solitary)</option>
+                  <option value="Malignant Peripheral Nerve Sheath Tumour (MPNST)">Malignant Peripheral Nerve Sheath Tumour (MPNST)</option>
+                  <option value="Other CNS / Peripheral Neoplasm">Other Paediatric Neoplasm</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="f-who-grade">WHO Histological Grade*</label>
+                <select id="f-who-grade" class="form-control font-bold" required>
+                  <option value="1">WHO Grade 1 (e.g. Pilocytic astrocytoma, Schwannoma)</option>
+                  <option value="2">WHO Grade 2 (e.g. Spinal ependymoma)</option>
+                  <option value="3">WHO Grade 3 (e.g. Anaplastic ependymoma, MPNST)</option>
+                  <option value="4" selected>WHO Grade 4 (e.g. Medulloblastoma, ATRT, DMG)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="f-ki67-labeling-index-pct">Ki-67 / MIB-1 Proliferation Index (%)</label>
+                <input type="number" step="0.5" id="f-ki67-labeling-index-pct" class="form-control font-mono font-bold" placeholder="e.g. 45.0%" />
+              </div>
+
+              <div class="form-group grid-span-2">
+                <label for="f-histological-subtype">Histological Subtype & Morphological Pattern</label>
+                <input type="text" id="f-histological-subtype" class="form-control" placeholder="e.g. Classic, Desmoplastic/Nodular, Large Cell / Anaplastic" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Molecular Markers Card -->
+          <div class="card grid-span-6 card-highlight-lova">
+            <h3 class="card-title">Molecular & Genetic Alterations</h3>
+            <div class="form-grid grid-cols-2">
+              <div class="form-group">
+                <label for="f-braf-status">BRAF Alteration Status</label>
+                <select id="f-braf-status" class="form-control font-bold">
+                  <option value="Wildtype" selected>Wildtype</option>
+                  <option value="KIAA1549-BRAF Fusion">KIAA1549-BRAF Fusion (7q34 duplication)</option>
+                  <option value="BRAF V600E Mutated">BRAF V600E Mutated (Targetable with Dabrafenib)</option>
+                  <option value="Other BRAF Alteration">Other BRAF Alteration</option>
+                  <option value="Not Tested">Not Tested</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="f-histone-h3-status">Histone H3 Mutation Status</label>
+                <select id="f-histone-h3-status" class="form-control font-bold">
+                  <option value="Wildtype" selected>Wildtype</option>
+                  <option value="H3 K27M Mutated (Diffuse Midline Glioma)">H3 K27M Mutated (DMG)</option>
+                  <option value="H3 G34R/V Mutated">H3 G34R/V Mutated (Hemispheric)</option>
+                  <option value="H3.3 K27M">H3.3 K27M</option>
+                  <option value="Not Tested">Not Tested</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="f-medulloblastoma-subgroup">Medulloblastoma Molecular Subgroup</label>
+                <select id="f-medulloblastoma-subgroup" class="form-control">
+                  <option value="Not Applicable">Not Applicable</option>
+                  <option value="WNT-Activated" selected>WNT-Activated (Low Risk, >95% OS)</option>
+                  <option value="SHH-Activated (TP53-Wildtype)">SHH-Activated (TP53-Wildtype)</option>
+                  <option value="SHH-Activated (TP53-Mutant)">SHH-Activated (TP53-Mutant / Very High Risk)</option>
+                  <option value="Non-WNT/Non-SHH (Group 3)">Non-WNT/Non-SHH (Group 3)</option>
+                  <option value="Non-WNT/Non-SHH (Group 4)">Non-WNT/Non-SHH (Group 4)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="f-ependymoma-subgroup">Ependymoma Molecular Subgroup</label>
+                <select id="f-ependymoma-subgroup" class="form-control">
+                  <option value="Not Applicable" selected>Not Applicable</option>
+                  <option value="Posterior Fossa Group A (PFA)">Posterior Fossa Group A (PFA - H3 K27me3 loss)</option>
+                  <option value="Posterior Fossa Group B (PFB)">Posterior Fossa Group B (PFB)</option>
+                  <option value="Supratentorial ZFTA-Fusion">Supratentorial ZFTA-Fusion (RELA)</option>
+                  <option value="Supratentorial YAP1-Fusion">Supratentorial YAP1-Fusion</option>
+                  <option value="Spinal Ependymoma">Spinal Ependymoma</option>
+                  <option value="Spinal MYCN-Amplified">Spinal MYCN-Amplified</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="f-smarcb1-ini1-status">SMARCB1 (INI1) Expression</label>
+                <select id="f-smarcb1-ini1-status" class="form-control">
+                  <option value="Retained (Intact)" selected>Retained (Intact)</option>
+                  <option value="Loss of Expression (ATRT)">Loss of Expression (Diagnostic for ATRT)</option>
+                  <option value="SMARCA4 Loss">SMARCA4 (BRG1) Loss</option>
+                  <option value="Not Applicable">Not Applicable</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="f-cdkn2a-b-deletion">CDKN2A/B Status</label>
+                <select id="f-cdkn2a-b-deletion" class="form-control">
+                  <option value="Intact" selected>Intact</option>
+                  <option value="Homozygous Deletion">Homozygous Deletion (High Risk / MPNST)</option>
+                  <option value="Not Tested">Not Tested</option>
+                </select>
+              </div>
+
+              <div class="form-group grid-span-2">
+                <label for="f-molecular-summary">Genomic / Methylation Profiling Summary</label>
+                <textarea id="f-molecular-summary" class="form-control" rows="2" placeholder="Next-generation sequencing panel (NGS), FISH, RT-PCR, DNA methylation classifier score..."></textarea>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- TAB 4: SURGERIES (PRIMARY, REDO, RECURRENCE, METASTASIS) -->
+      <section class="tab-panel" id="tab-surgeries">
+        <div class="panel-header-flex">
+          <div>
+            <h2>Surgical Interventions Register</h2>
+            <p class="panel-description">Tracking all operative procedures: Primary resections, planned <strong>Redo surgery</strong> (second-look residual clearance), <strong>Surgery for recurrence</strong>, <strong>Surgery for metastasis</strong>, and CSF diversion.</p>
+          </div>
+          <button id="btn-add-surgery" class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Record Surgical Operation
+          </button>
+        </div>
+
+        <div class="card mt-3">
+          <h3 class="card-title">Chronological Surgical Operations Register</h3>
+          <div class="table-responsive mt-2">
+            <table class="data-table" id="table-surgeries">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Procedure Category</th>
+                  <th>Lead Surgeon</th>
+                  <th>Surgical Approach</th>
+                  <th>Neuromonitoring (IONM)</th>
+                  <th>Fluorescence</th>
+                  <th>EOR Intended</th>
+                  <th>Blood Loss</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-surgeries">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: TUMOUR OUTCOMES (RESIDUE, FUNCTIONAL, COMPLICATIONS) -->
+      <section class="tab-panel" id="tab-outcomes">
+        <div class="panel-header">
+          <h2>Tumour-Related Outcomes: Residue, Functional Level & Complications</h2>
+          <p class="panel-description">Dedicated paediatric neuro-oncological outcomes: Extent of Resection (EOR), 24-48h post-op MRI residue, Modified Chang metastatic staging, Lansky/KPS functional performance, and complications.</p>
+        </div>
+
+        <form id="form-outcomes" class="grid-form">
+          <!-- 1. RESIDUE & EXTENT OF RESECTION (EOR) -->
+          <div class="card grid-span-6 card-highlight-csf">
+            <div class="card-header-flex">
+              <div>
+                <h3 class="card-title">1. Extent of Resection (EOR) & Residual Disease</h3>
+                <p class="card-subtitle">Confirmed by early 24-48h post-operative 3T volumetric MRI.</p>
+              </div>
+              <div class="badge badge-csf font-mono" id="eor-badge">GTR 100%</div>
+            </div>
+
+            <div class="form-grid grid-cols-2 mt-3">
+              <div class="form-group grid-span-2">
+                <label for="f-extent-of-resection-achieved">Extent of Resection (EOR) Achieved*</label>
+                <select id="f-extent-of-resection-achieved" class="form-control font-bold" required>
+                  <option value="Gross Total Resection (GTR - 100% resection, no enhancing residue)" selected>Gross Total Resection (GTR: 100% complete macroscopic clearance)</option>
+                  <option value="Near Total Resection (NTR - >90% resection, small rim <1.5 cm2)">Near Total Resection (NTR: &gt;90% resection, thin margin)</option>
+                  <option value="Subtotal Resection (STR - 50-90% resection)">Subtotal Resection (STR: 50 - 90% debulking)</option>
+                  <option value="Partial Resection / Debulking (<50%)">Partial Resection / Debulking (&lt;50%)</option>
+                  <option value="Biopsy Only">Biopsy Only (Stereotactic / Open / Endoscopic)</option>
+                  <option value="Unresectable">Unresectable</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="f-residual-tumour-present">Residual Tumour Present on MRI?</label>
+                <select id="f-residual-tumour-present" class="form-control font-bold">
+                  <option value="0" selected>No - Complete Clearance</option>
+                  <option value="1">Yes - Residual Tumour Present</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="f-residual-volume-cm3">Residual Tumour Volume (cm³)</label>
+                <input type="number" step="0.1" id="f-residual-volume-cm3" class="form-control font-mono font-bold" placeholder="0.0 cm³" />
+              </div>
+
+              <div class="form-group grid-span-2">
+                <label for="f-residual-location-description">Residual Anatomical Location & Reason for Incomplete Removal</label>
+                <textarea id="f-residual-location-description" class="form-control" rows="2" placeholder="e.g. Adherent to brainstem floor, encasement of basilar perforators, IONM signal drop..."></textarea>
+              </div>
+
+              <div class="form-group grid-span-2">
+                <label for="f-metastatic-stage-chang">Modified Chang Metastatic Staging (Neuraxis M Stage)</label>
+                <select id="f-metastatic-stage-chang" class="form-control font-bold">
+                  <option value="M0: No evidence of metastasis" selected>M0: No evidence of metastasis on whole-spine MRI or CSF</option>
+                  <option value="M1: Microscopic tumour cells in CSF cytology">M1: Microscopic malignant cells in CSF cytology (MRI clear)</option>
+                  <option value="M2: Gross nodular seeding in intracranial subarachnoid space">M2: Intracranial subarachnoid / ventricular nodular seeding</option>
+                  <option value="M3: Gross nodular seeding in spinal subarachnoid space (drop metastasis)">M3: Spinal subarachnoid seeding (Spinal Drop Metastasis)</option>
+                  <option value="M4: Extraneural metastasis beyond neuraxis">M4: Extraneural metastasis (Bone marrow / peritoneal shunt)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. FUNCTIONAL LEVEL & PERFORMANCE SCALE -->
+          <div class="card grid-span-6 card-highlight-lova">
+            <div class="card-header-flex">
+              <div>
+                <h3 class="card-title">2. Functional Level & Performance Scales</h3>
+                <p class="card-subtitle">Validated paediatric oncology functional performance metrics.</p>
+              </div>
+              <div class="badge badge-lova font-mono" id="performance-badge">Score: 90%</div>
+            </div>
+
+            <div class="form-grid grid-cols-2 mt-3">
+              <div class="form-group">
+                <label for="f-current-performance-score">Current Functional Score (0 - 100%)*</label>
+                <input type="number" id="f-current-performance-score" class="form-control font-mono font-bold text-emerald" min="0" max="100" step="10" value="90" required />
+              </div>
+              <div class="form-group">
+                <label for="f-performance-tool">Tool Applied</label>
+                <input type="text" id="f-performance-tool" class="form-control" value="Lansky Play-Performance Scale (<16y)" readonly />
+              </div>
+
+              <div class="form-group grid-span-2">
+                <label for="f-pcpc-functional-grade">Paediatric Cerebral Performance Category (PCPC Grade 1 - 5)*</label>
+                <select id="f-pcpc-functional-grade" class="form-control font-bold" required>
+                  <option value="Grade 1: Normal (Age-appropriate development & activities)" selected>Grade 1: Normal (Age-appropriate development & activities)</option>
+                  <option value="Grade 2: Mild Disability (Age-appropriate ADLs, minor deficit)">Grade 2: Mild Disability (Age-appropriate ADLs, minor deficit)</option>
+                  <option value="Grade 3: Moderate Disability (Accommodations needed for daily activities)">Grade 3: Moderate Disability (Special assistance / accommodations)</option>
+                  <option value="Grade 4: Severe Disability (Dependent on caregivers for daily needs)">Grade 4: Severe Disability (Dependent on others for daily care)</option>
+                  <option value="Grade 5: Coma / Vegetative State">Grade 5: Coma / Vegetative State</option>
+                </select>
+              </div>
+
+              <div class="form-group grid-span-2">
+                <label for="f-ambulatory-status">Ambulatory & Mobility Status</label>
+                <select id="f-ambulatory-status" class="form-control font-bold">
+                  <option value="Independently Ambulant without aids" selected>Independently Ambulant without aids</option>
+                  <option value="Ambulant with mobility aids (walker / cane)">Ambulant with mobility aids (walker / cane)</option>
+                  <option value="Non-Ambulant / Wheelchair Dependent">Non-Ambulant / Wheelchair Dependent</option>
+                  <option value="Bedbound">Bedbound</option>
+                </select>
+              </div>
+
+              <div class="form-group grid-span-2">
+                <label for="f-overall-disease-status">Overall Oncological Disease Status</label>
+                <select id="f-overall-disease-status" class="form-control font-bold text-emerald">
+                  <option value="Complete Remission (No Evidence of Disease - NED)" selected>Complete Remission (No Evidence of Disease - NED)</option>
+                  <option value="Stable Disease with Residue">Stable Disease with Residue</option>
+                  <option value="Partial Response to Adjuvant Therapy">Partial Response to Adjuvant Therapy</option>
+                  <option value="Local Recurrence / Progression">Local Recurrence / Progression</option>
+                  <option value="Metastatic Progression / Dissemination">Metastatic Progression / Dissemination</option>
+                  <option value="Palliative / End of Life Care">Palliative / End of Life Care</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. COMPLICATIONS CHECKLIST -->
+          <div class="card grid-span-12 card-highlight-amber mt-3">
+            <h3 class="card-title">3. Post-Operative & Treatment Complications Register</h3>
+            <div class="form-grid grid-cols-3 mt-3">
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-posterior-fossa-syndrome-cms" />
+                <label for="f-posterior-fossa-syndrome-cms"><strong>Cerebellar Mutism Syndrome (CMS) / Posterior Fossa Syndrome</strong></label>
+              </div>
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-cranial-nerve-deficit-postop" />
+                <label for="f-cranial-nerve-deficit-postop"><strong>Post-Operative Cranial Nerve Deficit</strong></label>
+              </div>
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-swallowing-dysphagia-peg-needed" />
+                <label for="f-swallowing-dysphagia-peg-needed"><strong>Severe Dysphagia requiring NG / PEG Feeding</strong></label>
+              </div>
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-endocrine-failure-postop" />
+                <label for="f-endocrine-failure-postop"><strong>Endocrine Failure / Panhypopituitarism / Central DI</strong></label>
+              </div>
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-csf-leak-or-pseudomeningocele" />
+                <label for="f-csf-leak-or-pseudomeningocele"><strong>CSF Leak / Pseudomeningocele</strong></label>
+              </div>
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-postop-hydrocephalus-shunt-required" />
+                <label for="f-postop-hydrocephalus-shunt-required"><strong>Persistent Hydrocephalus requiring Shunt / ETV</strong></label>
+              </div>
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-surgical-site-infection-meningitis" />
+                <label for="f-surgical-site-infection-meningitis"><strong>Surgical Site Infection / Meningitis</strong></label>
+              </div>
+              <div class="checkbox-control">
+                <input type="checkbox" id="f-radiation-necrosis-or-vasculopathy" />
+                <label for="f-radiation-necrosis-or-vasculopathy"><strong>Radionecrosis / Vasculopathy / Moyamoya</strong></label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- TAB 6: PAEDIATRIC NEURO-ONCOLOGY & CHEMOTHERAPY -->
+      <section class="tab-panel" id="tab-oncology">
+        <div class="panel-header-flex">
+          <div>
+            <h2>Paediatric Neuro-Oncology & Chemotherapy Input</h2>
+            <p class="panel-description">Input from paediatric neuro-oncologists: Systemic regimens, infant-sparing chemotherapy, molecular targeted therapies (BRAF, MEK, NTRK inhibitors), and toxicities.</p>
+          </div>
+          <button id="btn-add-oncology" class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Record Oncology Input
+          </button>
+        </div>
+
+        <div class="card mt-3">
+          <h3 class="card-title">Chemotherapy & Targeted Therapy Regimens</h3>
+          <div class="table-responsive mt-2">
+            <table class="data-table" id="table-oncology">
+              <thead>
+                <tr>
+                  <th>Protocol / Regimen</th>
+                  <th>Intent</th>
+                  <th>Targeted Agents</th>
+                  <th>Start Date</th>
+                  <th>Cycles (Completed / Planned)</th>
+                  <th>Response (RANO)</th>
+                  <th>Toxicities</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-oncology">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 7: RADIOTHERAPY & PROTON BEAM -->
+      <section class="tab-panel" id="tab-radiotherapy">
+        <div class="panel-header-flex">
+          <div>
+            <h2>Radiotherapy & Proton Beam Therapy (PBT) Input</h2>
+            <p class="panel-description">Input from clinical oncologists and radiotherapists: Modality (Proton Beam vs Photon vs SRS), field planning (Craniospinal Irradiation vs focal boost), dosimetry, and fraction counts.</p>
+          </div>
+          <button id="btn-add-radiotherapy" class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Record Radiotherapy Input
+          </button>
+        </div>
+
+        <div class="card mt-3">
+          <h3 class="card-title">Radiation Oncology Treatment Register</h3>
+          <div class="table-responsive mt-2">
+            <table class="data-table" id="table-radiotherapy">
+              <thead>
+                <tr>
+                  <th>Modality</th>
+                  <th>Treatment Field</th>
+                  <th>CSI Dose (Gy)</th>
+                  <th>Boost Dose (Gy)</th>
+                  <th>Total Dose (Gy)</th>
+                  <th>Fractions</th>
+                  <th>Completion Date</th>
+                  <th>Toxicities</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-radiotherapy">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 8: NEUROREHABILITATION -->
+      <section class="tab-panel" id="tab-rehabilitation">
+        <div class="panel-header-flex">
+          <div>
+            <h2>Neurorehabilitation Team Input</h2>
+            <p class="panel-description">Multidisciplinary allied healthcare input: Physiotherapy, Occupational Therapy, Speech & Language Therapy (dysphagia), and Dietetics.</p>
+          </div>
+          <button id="btn-add-rehab" class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Record Rehab Assessment
+          </button>
+        </div>
+
+        <div class="card mt-3">
+          <h3 class="card-title">Neurorehabilitation Goals & Progress Register</h3>
+          <div class="table-responsive mt-2">
+            <table class="data-table" id="table-rehab">
+              <thead>
+                <tr>
+                  <th>Assessment Date</th>
+                  <th>Physiotherapy (Gross Motor & Gait)</th>
+                  <th>Occupational Therapy (ADLs & School)</th>
+                  <th>SLT (Swallowing & Communication)</th>
+                  <th>Dietetics & Nutrition</th>
+                  <th>Assistive Equipment</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-rehab">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 9: NEUROPSYCHOLOGY -->
+      <section class="tab-panel" id="tab-neuropsychology">
+        <div class="panel-header-flex">
+          <div>
+            <h2>Neuropsychology Team Input</h2>
+            <p class="panel-description">Standardized cognitive assessment batteries: Full scale IQ/DQ, verbal comprehension, perceptual reasoning, processing speed, memory, and educational statement (EHCP) planning.</p>
+          </div>
+          <button id="btn-add-neuropsych" class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Record Neuropsychology Input
+          </button>
+        </div>
+
+        <div class="card mt-3">
+          <h3 class="card-title">Serial Neurocognitive Profiles Register</h3>
+          <div class="table-responsive mt-2">
+            <table class="data-table" id="table-neuropsych">
+              <thead>
+                <tr>
+                  <th>Test Date</th>
+                  <th>Battery Used</th>
+                  <th>Full Scale IQ / DQ</th>
+                  <th>Verbal Comp</th>
+                  <th>Perceptual / Fluid</th>
+                  <th>Working Memory</th>
+                  <th>Processing Speed</th>
+                  <th>EHCP & School Recommendations</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-neuropsych">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 10: FAMILY DISCUSSIONS LOG -->
+      <section class="tab-panel" id="tab-family-discussions">
+        <div class="panel-header-flex">
+          <div>
+            <h2>Discussions with the Family Register (Multi-Timepoint)</h2>
+            <p class="panel-description">Comprehensive documentation of structured consultations with the child and parents across the entire cancer trajectory: Diagnosis, surgical consent, post-op histology debrief, radiotherapy/chemo planning, recurrence, redo decisions, and parallel planning.</p>
+          </div>
+          <button id="btn-add-family-disc" class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Record Family Consultation
+          </button>
+        </div>
+
+        <div class="card mt-3">
+          <h3 class="card-title">Family Consultations & Goals of Care Register</h3>
+          <div class="table-responsive mt-2">
+            <table class="data-table" id="table-family-discussions">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Encounter Milestone</th>
+                  <th>Clinician Lead</th>
+                  <th>CNS Present</th>
+                  <th>Family Present</th>
+                  <th>Key Topics Discussed</th>
+                  <th>Family Preferences & Values</th>
+                  <th>Agreed Plan</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-family-discussions">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 11: COHORT ANALYTICS -->
+      <section class="tab-panel" id="tab-cohort">
+        <div class="panel-header">
+          <h2>Registry Cohort Analytics & Biostatistics</h2>
+          <p class="panel-description">Aggregated oncology biostatistics across tumour sites, WHO grades, surgical procedures (Primary vs Redo vs Recurrence), and overall disease remission rates.</p>
+        </div>
+
+        <div class="form-grid grid-cols-4 mt-3">
+          <div class="card text-center p-3">
+            <div class="text-xs text-muted uppercase font-semibold">Posterior Fossa Tumours</div>
+            <div class="text-2xl font-bold font-mono text-csf mt-1" id="stat-cohort-pf">0</div>
+          </div>
+          <div class="card text-center p-3">
+            <div class="text-xs text-muted uppercase font-semibold">Supratentorial Tumours</div>
+            <div class="text-2xl font-bold font-mono text-lova mt-1" id="stat-cohort-supra">0</div>
+          </div>
+          <div class="card text-center p-3">
+            <div class="text-xs text-muted uppercase font-semibold">Spine & Peripheral Nerve</div>
+            <div class="text-2xl font-bold font-mono text-amber mt-1" id="stat-cohort-spine-nerve">0</div>
+          </div>
+          <div class="card text-center p-3">
+            <div class="text-xs text-muted uppercase font-semibold">GTR Rate (Macroscopic Clearance)</div>
+            <div class="text-2xl font-bold font-mono text-emerald mt-1" id="stat-cohort-gtr-rate">0%</div>
+          </div>
+        </div>
+
+        <div class="form-grid grid-cols-2 mt-4">
+          <!-- Histology Breakdown -->
+          <div class="card">
+            <h3 class="card-title">WHO 2021 Histological Diagnoses</h3>
+            <div class="table-responsive mt-2">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Histological Diagnosis</th>
+                    <th>Patients (N)</th>
+                    <th>Percentage (%)</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody-cohort-histology">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Surgical Procedures Breakdown -->
+          <div class="card">
+            <h3 class="card-title">Surgical Procedures (Primary / Redo / Recurrence / Mets)</h3>
+            <div class="table-responsive mt-2">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Surgical Category</th>
+                    <th>Count (N)</th>
+                    <th>Percentage (%)</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody-cohort-surgery-types">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Extent of Resection -->
+          <div class="card mt-3">
+            <h3 class="card-title">Extent of Resection (EOR) Distribution</h3>
+            <div class="table-responsive mt-2">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Resection Extent</th>
+                    <th>Count (N)</th>
+                    <th>Percentage (%)</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody-cohort-eor">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Overall Disease Status -->
+          <div class="card mt-3">
+            <h3 class="card-title">Disease Remission & Status</h3>
+            <div class="table-responsive mt-2">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Disease Status</th>
+                    <th>Count (N)</th>
+                    <th>Percentage (%)</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody-cohort-disease-status">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Modals -->
+
+    <!-- Modal 1: Surgery Modal -->
+    <div class="modal-backdrop" id="modal-surgery" style="display:none;">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-header">
+          <h3 class="modal-title">Record Surgical Operation (Primary / Redo / Recurrence / Mets)</h3>
+          <button class="modal-close-btn" data-close-modal="modal-surgery">&times;</button>
+        </div>
+        <form id="form-modal-surgery">
+          <div class="modal-body">
+            <div class="form-grid grid-cols-2">
+              <div class="form-group grid-span-2">
+                <label for="m-surg-type">Surgical Procedure Category*</label>
+                <select id="m-surg-type" class="form-control font-bold" required>
+                  <option value="Primary Surgical Resection" selected>Primary Surgical Resection</option>
+                  <option value="Primary Biopsy (Stereotactic / Open / Endoscopic)">Primary Biopsy (Stereotactic / Open / Endoscopic)</option>
+                  <option value="Redo Surgery (Second-Look / Planned Residual Clearance)">Redo Surgery (Second-Look / Planned Residual Clearance)</option>
+                  <option value="Surgery for Recurrence (Relapse Resection)">Surgery for Recurrence (Local Relapse Resection)</option>
+                  <option value="Surgery for Metastasis (Drop Metastasis / Distant Decompression)">Surgery for Metastasis (Drop Metastasis / Distant Decompression)</option>
+                  <option value="CSF Diversion (ETV / VP Shunt / Ommaya Reservoir / EVD)">CSF Diversion (ETV / VP Shunt / Ommaya Reservoir / EVD)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="m-surg-date">Operation Date*</label>
+                <input type="date" id="m-surg-date" class="form-control" required />
+              </div>
+              <div class="form-group">
+                <label for="m-surg-lead">Lead Neurosurgeon*</label>
+                <input type="text" id="m-surg-lead" class="form-control" value="Dr G Narenthiran" required />
+              </div>
+
+              <div class="form-group grid-span-2">
+                <label for="m-surg-approach">Surgical Approach & Landmarks*</label>
+                <input type="text" id="m-surg-approach" class="form-control" required placeholder="e.g. Suboccipital telovelar approach / Pterional / Laminoplasty" />
+              </div>
+
+              <div class="form-group">
+                <label for="m-surg-ionm">Intraoperative Neuromonitoring (IONM)</label>
+                <select id="m-surg-ionm" class="form-control font-bold">
+                  <option value="1" selected>Yes - Multimodal IONM Used</option>
+                  <option value="0">No IONM</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="m-surg-ionm-modalities">IONM Modalities</label>
+                <input type="text" id="m-surg-ionm-modalities" class="form-control" value="MEPs, SSEPs, Cranial Nerves VII-XII EMG, BAEPs" />
+              </div>
+
+              <div class="form-group">
+                <label for="m-surg-image-guidance">Image Guidance / Navigation</label>
+                <input type="text" id="m-surg-image-guidance" class="form-control" value="StealthStation Neuronavigation + Intraoperative Ultrasound" />
+              </div>
+              <div class="form-group">
+                <label for="m-surg-fluorescence">Fluorescence Guidance</label>
+                <select id="m-surg-fluorescence" class="form-control">
+                  <option value="None" selected>None</option>
+                  <option value="Sodium Fluorescein (Yellow 560)">Sodium Fluorescein (Yellow 560)</option>
+                  <option value="5-ALA (Gliolan / Blue 400)">5-ALA (Gliolan / Blue 400)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="m-surg-blood-loss">Estimated Blood Loss (ml)</label>
+                <input type="number" id="m-surg-blood-loss" class="form-control font-mono" placeholder="e.g. 80 ml" />
+              </div>
+              <div class="form-group">
+                <label for="m-surg-duration">Duration of Surgery (minutes)</label>
+                <input type="number" id="m-surg-duration" class="form-control font-mono" placeholder="e.g. 240 min" />
+              </div>
+
+              <div class="form-group grid-span-2">
+                <label for="m-surg-notes">Operative Findings & Cavity Inspection</label>
+                <textarea id="m-surg-notes" class="form-control" rows="3" placeholder="Surgical plane, tumour consistency, brainstem interface, resection extent..."></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-close-modal="modal-surgery">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Surgical Record</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal 2: Oncology Modal -->
+    <div class="modal-backdrop" id="modal-oncology" style="display:none;">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3 class="modal-title">Record Paediatric Neuro-Oncology & Chemo Input</h3>
+          <button class="modal-close-btn" data-close-modal="modal-oncology">&times;</button>
+        </div>
+        <form id="form-modal-oncology">
+          <div class="modal-body">
+            <div class="form-grid grid-cols-2">
+              <div class="form-group grid-span-2">
+                <label for="m-onc-protocol">Protocol / Regimen Name*</label>
+                <input type="text" id="m-onc-protocol" class="form-control font-bold" required placeholder="e.g. SIOP PNET 5 MB / ACNS0331 / Infant Sparing" />
+              </div>
+              <div class="form-group">
+                <label for="m-onc-intent">Treatment Intent*</label>
+                <select id="m-onc-intent" class="form-control" required>
+                  <option value="Adjuvant / Curative" selected>Adjuvant / Curative</option>
+                  <option value="Neoadjuvant (Pre-op cytoreduction)">Neoadjuvant (Pre-op cytoreduction)</option>
+                  <option value="Infant Brain Sparing (Delay RT)">Infant Brain Sparing (Delay RT)</option>
+                  <option value="Targeted Molecular Therapy">Targeted Molecular Therapy</option>
+                  <option value="Maintenance">Maintenance</option>
+                  <option value="Palliative">Palliative</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="m-onc-targeted">Targeted Agents</label>
+                <input type="text" id="m-onc-targeted" class="form-control" placeholder="e.g. Dabrafenib + Trametinib / Larotrectinib" />
+              </div>
+
+              <div class="form-group">
+                <label for="m-onc-start-date">Start Date</label>
+                <input type="date" id="m-onc-start-date" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label for="m-onc-response">Response (RANO Criteria)</label>
+                <select id="m-onc-response" class="form-control font-bold">
+                  <option value="Complete Response (CR)" selected>Complete Response (CR)</option>
+                  <option value="Partial Response (PR)">Partial Response (PR)</option>
+                  <option value="Stable Disease (SD)">Stable Disease (SD)</option>
+                  <option value="Progressive Disease (PD)">Progressive Disease (PD)</option>
+                </select>
+              </div>
+
+              <div class="form-group grid-span-2">
+                <label for="m-onc-toxicities">Significant Toxicities / Dose Adjustments</label>
+                <textarea id="m-onc-toxicities" class="form-control" rows="2" placeholder="Neutropenia, neuropathy, ototoxicity, hepatotoxicity..."></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-close-modal="modal-oncology">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Oncology Input</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal 3: Radiotherapy Modal -->
+    <div class="modal-backdrop" id="modal-radiotherapy" style="display:none;">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3 class="modal-title">Record Radiotherapy & Proton Beam Therapy (PBT) Input</h3>
+          <button class="modal-close-btn" data-close-modal="modal-radiotherapy">&times;</button>
+        </div>
+        <form id="form-modal-radiotherapy">
+          <div class="modal-body">
+            <div class="form-grid grid-cols-2">
+              <div class="form-group">
+                <label for="m-rt-modality">Radiotherapy Modality*</label>
+                <select id="m-rt-modality" class="form-control font-bold" required>
+                  <option value="Proton Beam Therapy (PBT)" selected>Proton Beam Therapy (PBT - The Christie)</option>
+                  <option value="Conventional Photon 3D-CRT / VMAT">Conventional Photon VMAT / IMRT</option>
+                  <option value="Stereotactic Radiosurgery (SRS / CyberKnife)">Stereotactic Radiosurgery (SRS / CyberKnife)</option>
+                  <option value="Brachytherapy">Brachytherapy</option>
+                  <option value="Not Given / Sparing Infant Protocol">Not Given / Infant Sparing</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="m-rt-field">Treatment Field*</label>
+                <select id="m-rt-field" class="form-control font-bold" required>
+                  <option value="Craniospinal Irradiation (CSI) + Boost" selected>Craniospinal Irradiation (CSI) + Boost</option>
+                  <option value="Focal Tumour Bed Boost Only">Focal Tumour Bed Boost Only</option>
+                  <option value="Whole Brain + Boost">Whole Brain + Boost</option>
+                  <option value="Spinal Focal Field">Spinal Focal Field</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="m-rt-csi-dose">CSI Dose (Gy)</label>
+                <input type="number" step="0.1" id="m-rt-csi-dose" class="form-control font-mono" placeholder="e.g. 18.0 or 23.4 Gy" />
+              </div>
+              <div class="form-group">
+                <label for="m-rt-boost-dose">Boost Dose (Gy)</label>
+                <input type="number" step="0.1" id="m-rt-boost-dose" class="form-control font-mono" placeholder="e.g. 36.0 Gy" />
+              </div>
+              <div class="form-group">
+                <label for="m-rt-total-dose">Total Prescribed Dose (Gy)*</label>
+                <input type="number" step="0.1" id="m-rt-total-dose" class="form-control font-mono font-bold text-emerald" required placeholder="e.g. 54.0 Gy" />
+              </div>
+              <div class="form-group">
+                <label for="m-rt-fractions">Total Fractions Count*</label>
+                <input type="number" id="m-rt-fractions" class="form-control font-mono" required placeholder="e.g. 30 fractions" />
+              </div>
+
+              <div class="form-group">
+                <label for="m-rt-completion-date">Completion Date</label>
+                <input type="date" id="m-rt-completion-date" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label for="m-rt-toxicities">Radiation Toxicities</label>
+                <input type="text" id="m-rt-toxicities" class="form-control" placeholder="Alopecia, skin reaction, fatigue..." />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-close-modal="modal-radiotherapy">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Radiotherapy Record</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal 4: Rehab Modal -->
+    <div class="modal-backdrop" id="modal-rehab" style="display:none;">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3 class="modal-title">Record Neurorehabilitation Team Input</h3>
+          <button class="modal-close-btn" data-close-modal="modal-rehab">&times;</button>
+        </div>
+        <form id="form-modal-rehab">
+          <div class="modal-body">
+            <div class="form-grid grid-cols-1">
+              <div class="form-group">
+                <label for="m-rehab-date">Assessment Date*</label>
+                <input type="date" id="m-rehab-date" class="form-control" required />
+              </div>
+              <div class="form-group">
+                <label for="m-rehab-physio">Physiotherapy Goals & Mobility</label>
+                <textarea id="m-rehab-physio" class="form-control" rows="2" placeholder="Gait re-education, transfer training, balance, orthotics..."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="m-rehab-ot">Occupational Therapy Goals & Activities</label>
+                <textarea id="m-rehab-ot" class="form-control" rows="2" placeholder="Fine motor skills, ADL independence, school adaptation, seating..."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="m-rehab-slt">Speech & Language Therapy (Dysphagia / Communication)</label>
+                <textarea id="m-rehab-slt" class="form-control" rows="2" placeholder="Swallowing safety, speech clarity, cerebellar mutism recovery..."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="m-rehab-dietetics">Dietetics & Nutrition</label>
+                <input type="text" id="m-rehab-dietetics" class="form-control" placeholder="Oral diet vs NG / PEG tube feeds, weight monitoring" />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-close-modal="modal-rehab">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Rehab Record</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal 5: Neuropsychology Modal -->
+    <div class="modal-backdrop" id="modal-neuropsych" style="display:none;">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3 class="modal-title">Record Neuropsychology Assessment</h3>
+          <button class="modal-close-btn" data-close-modal="modal-neuropsych">&times;</button>
+        </div>
+        <form id="form-modal-neuropsych">
+          <div class="modal-body">
+            <div class="form-grid grid-cols-2">
+              <div class="form-group">
+                <label for="m-np-date">Assessment Date*</label>
+                <input type="date" id="m-np-date" class="form-control" required />
+              </div>
+              <div class="form-group">
+                <label for="m-np-battery">Assessment Battery Used*</label>
+                <select id="m-np-battery" class="form-control font-bold" required>
+                  <option value="WISC-V" selected>WISC-V (Wechsler Intelligence Scale for Children)</option>
+                  <option value="WPPSI-IV">WPPSI-IV (Wechsler Preschool & Primary)</option>
+                  <option value="WAIS-IV">WAIS-IV (Wechsler Adult Scale &ge;16y)</option>
+                  <option value="Bayley Scales (BSID-4)">Bayley-4 (Infants & Toddlers)</option>
+                  <option value="Vineland-3">Vineland-3 Adaptive Behavior</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="m-np-fsiq">Full Scale IQ / DQ Score*</label>
+                <input type="number" id="m-np-fsiq" class="form-control font-mono font-bold text-emerald" placeholder="e.g. 98" required />
+              </div>
+              <div class="form-group">
+                <label for="m-np-vci">Verbal Comprehension (VCI)</label>
+                <input type="number" id="m-np-vci" class="form-control font-mono" placeholder="e.g. 104" />
+              </div>
+
+              <div class="form-group">
+                <label for="m-np-pri">Perceptual / Fluid Reasoning (PRI)</label>
+                <input type="number" id="m-np-pri" class="form-control font-mono" placeholder="e.g. 96" />
+              </div>
+              <div class="form-group">
+                <label for="m-np-wmi">Working Memory Index (WMI)</label>
+                <input type="number" id="m-np-wmi" class="form-control font-mono" placeholder="e.g. 95" />
+              </div>
+
+              <div class="form-group">
+                <label for="m-np-psi">Processing Speed Index (PSI)</label>
+                <input type="number" id="m-np-psi" class="form-control font-mono" placeholder="e.g. 92" />
+              </div>
+              <div class="form-group">
+                <label for="m-np-ehcp">EHCP / School Support Band</label>
+                <input type="text" id="m-np-ehcp" class="form-control" placeholder="e.g. EHCP Band 3 approved" />
+              </div>
+
+              <div class="form-group grid-span-2">
+                <label for="m-np-executive">Executive Function & Educational Recommendations</label>
+                <textarea id="m-np-executive" class="form-control" rows="2" placeholder="Attention, working memory accommodations, rest breaks, classroom seating..."></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-close-modal="modal-neuropsych">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Neuropsych Record</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal 6: Family Discussion Modal -->
+    <div class="modal-backdrop" id="modal-family-disc" style="display:none;">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-header">
+          <h3 class="modal-title">Record Discussion with the Family (Multi-Timepoint)</h3>
+          <button class="modal-close-btn" data-close-modal="modal-family-disc">&times;</button>
+        </div>
+        <form id="form-modal-family-disc">
+          <div class="modal-body">
+            <div class="form-grid grid-cols-2">
+              <div class="form-group">
+                <label for="m-disc-date">Discussion Date*</label>
+                <input type="date" id="m-disc-date" class="form-control" required />
+              </div>
+              <div class="form-group">
+                <label for="m-disc-milestone">Clinical Encounter Milestone*</label>
+                <select id="m-disc-milestone" class="form-control font-bold" required>
+                  <option value="Initial Diagnosis & Prognostic Orientation" selected>Initial Diagnosis & Prognostic Orientation</option>
+                  <option value="Pre-Operative Consent & Surgical Risk Discussion">Pre-Operative Consent & Surgical Risk Discussion</option>
+                  <option value="Post-Operative Histology & Molecular MDT Debrief">Post-Operative Histology & Molecular MDT Debrief</option>
+                  <option value="Adjuvant Oncology (Chemo / Proton Therapy) Planning">Adjuvant Oncology (Chemo / Proton Therapy) Planning</option>
+                  <option value="Surveillance & Mid-Treatment Progress Review">Surveillance & Mid-Treatment Progress Review</option>
+                  <option value="Disease Recurrence / Relapse / Progression Conversation">Disease Recurrence / Relapse / Progression Conversation</option>
+                  <option value="Surgical Redo / Re-operation Discussion">Surgical Redo / Re-operation Discussion</option>
+                  <option value="Advance Care Planning / Palliative / Parallel Planning">Advance Care Planning / Palliative / Parallel Planning</option>
+                  <option value="Transition to Teen / Adult Oncology Services">Transition to Teen / Adult Oncology Services</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="m-disc-lead">Clinician Lead*</label>
+                <input type="text" id="m-disc-lead" class="form-control" value="Dr G Narenthiran" required />
+              </div>
+              <div class="form-group">
+                <label for="m-disc-cns">Clinical Nurse Specialist (CNS) Present</label>
+                <input type="text" id="m-disc-cns" class="form-control" value="Sister Rachel Adams" />
+              </div>
+
+              <div class="form-group grid-span-2">
+                <label for="m-disc-family-members">Family Members Present*</label>
+                <input type="text" id="m-disc-family-members" class="form-control" placeholder="e.g. Mother, Father, Maternal Grandmother, Patient (where age-appropriate)" required />
+              </div>
+
+              <div class="form-group grid-span-2">
+                <label for="m-disc-topics">Key Topics Discussed & Information Provided*</label>
+                <textarea id="m-disc-topics" class="form-control" rows="3" required placeholder="Detailed clinical summary of topics discussed, diagnostic explanation, prognosis, surgical options, treatment toxicities..."></textarea>
+              </div>
+
+              <div class="form-group grid-span-2">
+                <label for="m-disc-preferences">Family Preferences, Values & Goals of Care</label>
+                <textarea id="m-disc-preferences" class="form-control" rows="2" placeholder="Family's priorities, cultural or spiritual values, school expectations, goals of treatment..."></textarea>
+              </div>
+
+              <div class="form-group grid-span-2">
+                <label for="m-disc-agreed-plan">Agreed Management Plan & Psychosocial Support</label>
+                <textarea id="m-disc-agreed-plan" class="form-control" rows="2" placeholder="Next clinical steps agreed, referrals made (Young Lives vs Cancer, psychologist, key worker)..."></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-close-modal="modal-family-disc">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Family Consultation Record</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal 7: Inpatient Discharge Letter Modal -->
+    <div class="modal-backdrop" id="modal-discharge-letter" style="display:none;">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-header">
+          <h3 class="modal-title">Inpatient Admission & Discharge Summary Letter</h3>
+          <button class="modal-close-btn" data-close-modal="modal-discharge-letter">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div style="margin-bottom:0.75rem; display:flex; justify-content:space-between; align-items:center;">
+            <span class="text-xs text-muted">Formatted for Royal Manchester Paediatric Neurosurgery & Oncology Service</span>
+            <button type="button" class="btn btn-secondary btn-sm" id="btn-copy-discharge-letter">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              Copy to Clipboard
+            </button>
+          </div>
+          <textarea id="txt-discharge-letter" class="form-control font-mono text-xs" style="height:380px; width:100%; white-space:pre; resize:vertical;"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close-modal="modal-discharge-letter">Close</button>
+          <button type="button" class="btn btn-primary" id="btn-print-discharge-letter">Print / Export PDF</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 8: Outpatient Clinic Letter Modal -->
+    <div class="modal-backdrop" id="modal-clinic-letter" style="display:none;">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-header">
+          <h3 class="modal-title">Outpatient Paediatric Neurosurgical Oncology Review Letter</h3>
+          <button class="modal-close-btn" data-close-modal="modal-clinic-letter">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div style="margin-bottom:0.75rem; display:flex; justify-content:space-between; align-items:center;">
+            <span class="text-xs text-muted">Formatted for GP, Shared Care Oncology & Community Child Development Team</span>
+            <button type="button" class="btn btn-secondary btn-sm" id="btn-copy-clinic-letter">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              Copy to Clipboard
+            </button>
+          </div>
+          <textarea id="txt-clinic-letter" class="form-control font-mono text-xs" style="height:380px; width:100%; white-space:pre; resize:vertical;"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close-modal="modal-clinic-letter">Close</button>
+          <button type="button" class="btn btn-primary" id="btn-print-clinic-letter">Print / Export PDF</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 9: Database Operations & Backups Modal -->
+    <div class="modal-backdrop" id="modal-db-operations" style="display:none;">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3 class="modal-title">Database Export, Stata (.dta), Excel & SQLite Backups</h3>
+          <button class="modal-close-btn" data-close-modal="modal-db-operations">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="text-sm text-secondary mb-3">Privilege Level: <span class="badge" id="db-ops-user-badge">Administrator</span></p>
+          <div class="form-grid grid-cols-1" style="gap:1rem;">
+            <!-- Stata .dta Export -->
+            <div class="card p-3 border rounded" style="background:rgba(2,132,199,0.08); border-color:var(--accent-csf);">
+              <div class="flex-between">
+                <div>
+                  <strong class="text-csf">Stata (.dta) Native Biostatistical File</strong>
+                  <div class="text-xs text-muted">Exports native binary .dta dataset with tumour histology, molecular subgroups, EOR residue, Lansky/KPS, Chang stage, and complications for immediate statistical analysis in Stata 10-19, R, or Python.</div>
+                </div>
+                <button type="button" class="btn btn-primary btn-sm" id="btn-export-stata">Export Stata (.dta)</button>
+              </div>
+            </div>
+
+            <!-- Excel Multi-Sheet Backup -->
+            <div class="card p-3 border rounded" style="background:rgba(16,185,129,0.08); border-color:var(--accent-success);">
+              <div class="flex-between">
+                <div>
+                  <strong class="text-emerald">Microsoft Excel (.xls / XML) Multi-Sheet Backup</strong>
+                  <div class="text-xs text-muted">Complete spreadsheet export with worksheets for Patients, Surgeries, and Family Discussions.</div>
+                </div>
+                <button type="button" class="btn btn-success btn-sm" id="btn-export-excel">Export Excel</button>
+              </div>
+            </div>
+
+            <!-- Full JSON / SQLite Snapshot -->
+            <div class="card p-3 border rounded">
+              <div class="flex-between">
+                <div>
+                  <strong>Complete JSON / SQLite Registry Archive</strong>
+                  <div class="text-xs text-muted">Full transactional backup of the database including child tables and encrypted audit records.</div>
+                </div>
+                <button type="button" class="btn btn-secondary btn-sm" id="btn-export-json">Export Archive</button>
+              </div>
+            </div>
+
+            <!-- Clone Database -->
+            <div class="card p-3 border rounded">
+              <div class="flex-between">
+                <div>
+                  <strong>Clone Database Snapshot</strong>
+                  <div class="text-xs text-muted">Create an exact replica clone of this registry database for isolated research analysis.</div>
+                </div>
+                <button type="button" class="btn btn-warning btn-sm" id="btn-clone-db">Clone Database</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close-modal="modal-db-operations">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 10: Encrypted Audit Log Modal -->
+    <div class="modal-backdrop" id="modal-audit-log" style="display:none;">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-header">
+          <h3 class="modal-title">Encrypted Cryptographic Audit Ledger (Regulatory Standard)</h3>
+          <button class="modal-close-btn" data-close-modal="modal-audit-log">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="flex-between mb-2">
+            <span class="text-xs text-muted">Immutable SHA-256 cryptographically chained audit log ledger. Cannot be modified or deleted.</span>
+            <span class="badge badge-csf font-mono" id="audit-log-count-badge">Entries: 0</span>
+          </div>
+          <div class="table-responsive" style="max-height:360px; overflow-y:auto;">
+            <table class="data-table text-xs" id="table-audit-log">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>User</th>
+                  <th>Role</th>
+                  <th>Action</th>
+                  <th>Resource</th>
+                  <th>Details Preview</th>
+                  <th>Decrypted Verification</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-audit-log">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close-modal="modal-audit-log">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 11: Database Design Studio (Developer Only) -->
+    <div class="modal-backdrop" id="modal-database-design" style="display:none;">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-header">
+          <h3 class="modal-title">Database Design & Schema Studio (Developer Privilege)</h3>
+          <button class="modal-close-btn" data-close-modal="modal-database-design">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="text-xs text-muted mb-2">Lead Developer schema definitions: inspect or extend tables, foreign key constraints, and oncology columns.</p>
+          <textarea id="txt-db-design-schema" class="form-control font-mono text-xs" style="height:340px; width:100%; white-space:pre;"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close-modal="modal-database-design">Cancel</button>
+          <button type="button" class="btn btn-warning" id="btn-save-db-design">Apply Schema Changes</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 12: User Management (Admin Only) -->
+    <div class="modal-backdrop" id="modal-user-management" style="display:none;">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3 class="modal-title">User Account & Privilege Management</h3>
+          <button class="modal-close-btn" data-close-modal="modal-user-management">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="form-create-user" class="card p-3 mb-3 border rounded">
+            <h4 class="text-xs font-semibold uppercase text-secondary mb-2">Create New System User</h4>
+            <div class="form-grid grid-cols-2">
+              <div class="form-group">
+                <label for="f-new-username">Username*</label>
+                <input type="text" id="f-new-username" class="form-control" required placeholder="e.g. jsmith" />
+              </div>
+              <div class="form-group">
+                <label for="f-new-fullname">Full Name*</label>
+                <input type="text" id="f-new-fullname" class="form-control" required placeholder="e.g. Dr John Smith" />
+              </div>
+              <div class="form-group">
+                <label for="f-new-role">Role*</label>
+                <select id="f-new-role" class="form-control" required>
+                  <option value="User" selected>User (Add / Edit Records)</option>
+                  <option value="Administrator">Administrator (Users, Exports, Backups)</option>
+                  <option value="Developer">Developer (Schema Design & DB)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="f-new-password">Initial Password*</label>
+                <input type="password" id="f-new-password" class="form-control" required placeholder="Temporary password" />
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm mt-2">Create User Account</button>
+          </form>
+
+          <h4 class="text-xs font-semibold uppercase text-secondary mb-1">Active Database Accounts</h4>
+          <div class="table-responsive" style="max-height:200px; overflow-y:auto;">
+            <table class="data-table text-xs" id="table-users-list">
+              <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>Full Name</th>
+                  <th>Role</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-users-list">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close-modal="modal-user-management">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 13: Change Password Modal -->
+    <div class="modal-backdrop" id="modal-change-password" style="display:none;">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3 class="modal-title">Change My Password</h3>
+          <button class="modal-close-btn" data-close-modal="modal-change-password">&times;</button>
+        </div>
+        <form id="form-change-password">
+          <div class="modal-body">
+            <div class="form-grid grid-cols-1">
+              <div class="form-group">
+                <label for="f-pwd-current">Current Password*</label>
+                <input type="password" id="f-pwd-current" class="form-control" required />
+              </div>
+              <div class="form-group">
+                <label for="f-pwd-new">New Password*</label>
+                <input type="password" id="f-pwd-new" class="form-control" required minlength="6" />
+              </div>
+              <div class="form-group">
+                <label for="f-pwd-confirm">Confirm New Password*</label>
+                <input type="password" id="f-pwd-confirm" class="form-control" required minlength="6" />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-close-modal="modal-change-password">Cancel</button>
+            <button type="submit" class="btn btn-primary">Update Password</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal 14: About & Dedication Modal -->
+    <div class="modal-backdrop" id="modal-about" style="display:none;">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3 class="modal-title">About & Attribution</h3>
+          <button class="modal-close-btn" data-close-modal="modal-about">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div style="text-align:center; margin-bottom:1rem;">
+            <div class="text-csf text-xl font-bold">Multidisciplinary Paediatric Neurosurgical Oncology Database</div>
+            <div class="text-xs text-muted mt-1">Version 1.0.0 &bull; Release 2026</div>
+          </div>
+          <div class="card p-3 border rounded mb-3" style="background:rgba(15,23,42,0.8);">
+            <div class="text-sm font-semibold text-main mb-1">Author & Clinical Architect:</div>
+            <div class="text-xs text-secondary leading-relaxed">
+              <strong>Dr G Narenthiran MB ChB BSc(MedSci)(Hons) MRCS(Ed.) FEBNS FRCS(SN)</strong><br />
+              Consultant Paediatric Neurosurgeon<br />
+              Email: <a href="mailto:g_narenthiran@hotmail.com" style="color:var(--accent-csf);">g_narenthiran@hotmail.com</a><br />
+              Copyright &copy; 2026, Dr G Narenthiran. All rights reserved.
+            </div>
+          </div>
+          <div class="card p-3 border rounded" style="background:rgba(2,132,199,0.06); border-color:var(--accent-csf);">
+            <div class="text-sm font-semibold text-csf mb-1">Dedication:</div>
+            <div class="text-xs text-secondary italic leading-relaxed">
+              "Dedicated with utmost love and gratitude to Mrs Nirmaladevy Ganesalingam BSc."
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-close-modal="modal-about">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 15: RBAC Login Barrier -->
+    <div id="modal-login-barrier" class="login-overlay" style="display:flex;">
+      <div class="login-card">
+        <div class="login-header">
+          <div class="brand-icon mx-auto mb-2" style="width:48px; height:48px; margin:0 auto 0.75rem auto; background:linear-gradient(135deg, #8b5cf6, #3b82f6);">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2a10 10 0 0 0-10 10c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+            </svg>
+          </div>
+          <h2 class="login-title">Multidisciplinary Paediatric Neurosurgical Oncology Database</h2>
+          <p class="login-subtitle">Conceived, designed and tested: Dr G Narenthiran MB ChB BSc(MedSci)(Hons) MRCS(Ed.) FEBNS FRCS(SN)</p>
+          <div class="text-xs text-muted italic mt-1">Dedicated to Mrs Nirmaladevy Ganesalingam BSc</div>
+        </div>
+
+        <form id="form-login" class="login-form">
+          <div class="form-group mb-3">
+            <label for="f-login-username">Username</label>
+            <input type="text" id="f-login-username" class="form-control" required placeholder="admin / developer / clinician" autofocus />
+          </div>
+          <div class="form-group mb-3">
+            <label for="f-login-password">Password</label>
+            <input type="password" id="f-login-password" class="form-control" required placeholder="Enter password" />
+          </div>
+
+          <div id="login-error-msg" class="login-error-alert" style="display:none;">Invalid username or password.</div>
+
+          <button type="submit" class="btn btn-primary btn-block py-2 mt-3 font-semibold" style="width:100%;">
+            Secure Clinical Sign In
+          </button>
+        </form>
+
+        <div class="login-demo-roles">
+          <div class="demo-role-title">Demo User Credentials:</div>
+          <div class="demo-role-badge" onclick="document.getElementById('f-login-username').value='admin'; document.getElementById('f-login-password').value='admin2026!';">
+            <strong>Administrator:</strong> <code>admin</code> / <code>admin2026!</code>
+          </div>
+          <div class="demo-role-badge" onclick="document.getElementById('f-login-username').value='developer'; document.getElementById('f-login-password').value='dev2026!';">
+            <strong>Developer:</strong> <code>developer</code> / <code>dev2026!</code>
+          </div>
+          <div class="demo-role-badge" onclick="document.getElementById('f-login-username').value='clinician'; document.getElementById('f-login-password').value='user2026!';">
+            <strong>Clinician (User):</strong> <code>clinician</code> / <code>user2026!</code>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/schema.js" type="module"></script>
+  <script src="js/scoring-engines.js" type="module"></script>
+  <script src="js/db-adapter.js"></script>
+  <script src="js/app.js" type="module"></script>
+</body>
+</html>
